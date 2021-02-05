@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+cd lib/*/site-packages
+
+zip ../../../dist/sigma-api \
+	--filesync              \
+	--quiet                 \
+	--recurse-paths         \
+	*

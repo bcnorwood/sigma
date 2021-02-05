@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [ -f dist/sigma-ui.zip ]; then
+	echo "Updating stored node_modules..."
+else
+	echo "Storing node_modules in archive... (this could take a while)"
+fi
+
+zip dist/sigma-ui   \
+	--filesync      \
+	--quiet         \
+	--recurse-paths \
+	node_modules

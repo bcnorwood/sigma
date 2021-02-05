@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+zip dist/sigma-api     \
+	--recurse-paths    \
+	lambda_function.py \
+	response.py        \
+	routes
+
+aws lambda update-function-code --function-name sigma-api --zip-file fileb://dist/sigma-api.zip

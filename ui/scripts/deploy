@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+aws lambda update-function-code --function-name $npm_package_config_lambdaName --zip-file fileb://dist/sigma-ui.zip

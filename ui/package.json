@@ -1,0 +1,46 @@
+{
+    "name": "sigma-ui",
+    "version": "1.0.0",
+    "license": "MIT",
+    "targets": {
+        "_": {
+            "sourceMap": false,
+            "engines": {
+                "node": "12"
+            }
+        }
+    },
+    "scripts": {
+        "postinstall": "scripts/store_modules",
+        "clean": "rm -rf dist/.build/* dist/.cache/*",
+        "build": "run-p build:*",
+        "build:server": "parcel build --dist-dir=dist/.build --cache-dir=dist/.cache --no-minify src/index.js",
+        "build:client": "parcel build --dist-dir=dist/.build --cache-dir=dist/.cache --no-minify src/client",
+        "build:styles": "parcel build --dist-dir=dist/.build --cache-dir=dist/.cache --no-minify src/styles.sass",
+        "store": "cd dist/.build && zip --quiet ../sigma-ui index.js client.js styles.css",
+        "store:server": "cd dist/.build && zip --quiet ../sigma-ui index.js",
+        "store:client": "cd dist/.build && zip --quiet ../sigma-ui client.js",
+        "store:styles": "cd dist/.build && zip --quiet ../sigma-ui styles.css",
+        "refresh": "run-s clean build store deploy",
+        "refresh:server": "run-s clean build:server store:server deploy",
+        "refresh:client": "run-s clean build:client store:client deploy",
+        "refresh:styles": "run-s clean build:styles store:styles deploy",
+        "deploy": "scripts/deploy"
+    },
+    "dependencies": {
+        "node-fetch": "^2.6.1",
+        "react": "17.x",
+        "react-dom": "17.x",
+        "react-router": "5.x",
+        "react-router-dom": "5.x"
+    },
+    "devDependencies": {
+        "@parcel/transformer-svg-react": "next",
+        "npm-run-all": "latest",
+        "parcel": "next",
+        "sass": "latest"
+    },
+    "config": {
+        "lambdaName": "sigma-ui"
+    }
+}

@@ -1,0 +1,78 @@
+html, body
+	position: absolute
+	left: 0
+	top: 0
+	right: 0
+	bottom: 0
+	margin: 0
+	bottom: 0
+
+body
+	display: flex
+	justify-content: center
+	align-items: center
+	background-color: #222
+	font-family: "Open Sans"
+
+button
+	padding: 15px
+	border: 5px solid #444
+	border-radius: 50px
+
+#app
+	display: flex
+	flex-direction: column
+	padding: 30px 40px
+	background-color: #222
+	border: 10px solid #444
+	border-radius: 24px
+
+#header
+	display: flex
+	justify-content: space-between
+	align-items: center
+
+	h1
+		font-size: 60px
+		line-height: 80px
+		color: #bbb
+		margin: 0
+
+		strong
+			color: #ddd
+			text-transform: uppercase
+
+#preview
+	display: flex
+	justify-content: space-between
+	align-items: center
+
+	> div
+		background-position: center
+		background-size: contain
+		backgroud-repeat: no-repeat
+
+#prev, #next
+	display: flex
+	justify-content: center
+	align-items: center
+	opacity: 0.3
+	width: 300px
+	height: 300px
+
+	&:after
+		font-size: 120px
+		font-weight: bold
+		color: #eee
+
+
+#prev:after
+	content: "<<"
+
+#next:after
+	content: ">>"
+
+#cur
+	margin: 0 40px
+	width: 400px
+	height: 400px

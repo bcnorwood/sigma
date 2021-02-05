@@ -1,0 +1,14 @@
+{
+    "source": "index.js",
+    "main": "../../dist/.build/client.js",
+    "targets": {
+        "main": {
+            "includeNodeModules": true,
+            "sourceMap": false
+        }
+    },
+    "context": "browser",
+    "dependencies": {
+        "react": "^17.0.1"
+    }
+}
