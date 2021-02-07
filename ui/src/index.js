@@ -12,7 +12,7 @@ import App from '/app';
 
 const compress = promisify(zlib.brotliCompress);
 
-export async function handler({ pathParameters: { route: pathname } }) {
+export async function handler({ pathParameters: { route } }) {
 	try {
 		const images = await (await fetch('https://yn0zm5i2i3.execute-api.us-west-2.amazonaws.com/v1/images')).json();
 		const initData = `
@@ -24,7 +24,7 @@ export async function handler({ pathParameters: { route: pathname } }) {
 			<html>
 				<head>
 					<meta charSet="utf-8" />
-					<title>React Test</title>
+					<title>SIGma - Serverless Image Gallery</title>
 					<link rel="icon" href="data:," />
 					<link rel="preconnect" href="https://fonts.gstatic.com" />
 					<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" />
@@ -33,8 +33,8 @@ export async function handler({ pathParameters: { route: pathname } }) {
 				</head>
 				<body>
 					<div id="app">
-						<Router location={{ pathname }}>
-							<App images={images} />
+						<Router location={{ pathname: `/${route}` }}>
+							<App initImages={images} />
 						</Router>
 					</div>
 					<script dangerouslySetInnerHTML={{ __html: file('client.js', 'utf-8') }} />
@@ -42,7 +42,7 @@ export async function handler({ pathParameters: { route: pathname } }) {
 			</html>
 		);
 
-		encoded = (await compress(html,
+		const encoded = (await compress(html,
 			{ params: {
 				[zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
 				[zlib.constants.BROTLI_PARAM_SIZE_HINT]: html.length

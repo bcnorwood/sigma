@@ -7,18 +7,22 @@ import response
 
 def lambda_handler(event, context):
 	try:
-		http_api = 'http_api' in event['headers']
+		v2 = 'routeKey' in event
 
-		if http_api:
+		if v2:
 			method, route = event['routeKey'].split(' ')
 		else:
 			method, route = event['httpMethod'], event['resource']
 
 		result = routes.match(method, route)(event, db, store)
-		if isinstance(result, dict):
-			return response.success(**result, raw=http_api)
 
-		return response.success(result, raw=http_api)
+		if v2:
+			return result
+
+		if isinstance(result, dict):
+			return response.success(**result)
+
+		return response.success(result)
 
 	except Exception as ex:
 		return response.error(ex)

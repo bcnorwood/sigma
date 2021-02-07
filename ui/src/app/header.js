@@ -2,36 +2,39 @@ import React from 'react';
 
 import Button from './button';
 
-export default function Header() {
+export default function Header({ addImages }) {
 	const uploadHandler = () => {
-		console.log('clicked upload');
-		Object.assign(
-			document.createElement('input'),
-			{
-				type: 'file',
-				accept: 'image/*',
-				multiple: true,
-				oninput: ({ target: { files } }) => {
-					const formData = new FormData;
-					for (const file of files) {
-					    formData.append('files[]', file);
-					}
+		const input = document.createElement('input');
+		input.type = 'file';
+		input.accept = 'image/*';
+		input.multiple = true;
 
-				    const xhr = new XMLHttpRequest;
-					xhr.onload = () => console.log('uploaded');
-					xhr.open('POST', 'upload');
-					xhr.send(formData);
-				}
+		input.addEventListener('input', () => {
+			const formData = new FormData;
+			for (const file of input.files) {
+			    formData.append('files[]', file);
 			}
-		).click()
+
+		    const xhr = new XMLHttpRequest;
+			xhr.open('POST', '/upload');
+
+			xhr.responseType = 'json';
+			xhr.addEventListener('load', () => {
+				addImages(xhr.response);
+			});
+
+			xhr.send(formData);
+		});
+
+		input.click();
 	};
 
 	return (
 		<div id="header">
 			<h1>
-				<strong>sig</strong>ma
+				<strong>SIG</strong>ma
 			</h1>
-			<Button icon='upload' handler={ uploadHandler } />
+			<Button icon="upload" handler={uploadHandler} />
 		</div>
 	);
 }

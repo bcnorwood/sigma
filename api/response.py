@@ -5,7 +5,7 @@ def success(body = None, status = None, mime = None, headers = {}, encoded = Fal
 	response = {}
 
 	if body is not None:
-		response['body'] = body if raw or isinstance(body, str) else stringify(body)
+		response['body'] = body if isinstance(body, str) else stringify(body)
 
 		if encoded:
 			response['isBase64Encoded'] = True
@@ -14,8 +14,9 @@ def success(body = None, status = None, mime = None, headers = {}, encoded = Fal
 		response['statusCode'] = status
 
 	if mime:
-		headers['Content-Type'] = mime
-	headers['Access-Control-Allow-Origin'] = 'https://emyhny0tlc.execute-api.us-west-2.amazonaws.com'
+		headers['content-type'] = mime
+
+	headers['access-control-allow-origin'] = 'https://emyhny0tlc.execute-api.us-west-2.amazonaws.com'
 
 	response['headers'] = headers
 
