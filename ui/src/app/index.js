@@ -6,6 +6,7 @@ import Preview from './preview';
 import Zoom from './zoom';
 
 export default function App({ initImages }) {
+	// enable React state to track current list of images
 	const [images, setImages] = useState(initImages);
 
 	return (

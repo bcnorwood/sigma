@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# show a different message if we're not updating as the initial store can be slow
 if [ -f dist/sigma-ui.zip ]; then
 	echo "Updating stored node_modules..."
 else

@@ -39,8 +39,5 @@
         "npm-run-all": "latest",
         "parcel": "next",
         "sass": "latest"
-    },
-    "config": {
-        "lambdaName": "sigma-ui"
     }
 }

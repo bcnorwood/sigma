@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-cd lib/*/site-packages
+# install Python modules
+pip install -r requirements.txt
 
+# store modules in archive
+cd lib/*/site-packages
 zip ../../../dist/sigma-api \
 	--filesync              \
 	--quiet                 \

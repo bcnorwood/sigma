@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { close as CloseIcon } from '~/icons';
 
 export default function Zoom() {
+	// get image UUID from route parameters
 	const { image } = useParams();
 	return (
 		<div id="zoom">

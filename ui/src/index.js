@@ -10,16 +10,20 @@ import { StaticRouter as Router } from 'react-router-dom';
 
 import App from '/app';
 
+// enable async/await for brotli compression
 const compress = promisify(zlib.brotliCompress);
 
+// main Lambda handler
 export async function handler({ pathParameters: { route } }) {
 	try {
+		// get list of images from API and pass to client with inline JS
 		const images = await (await fetch('https://yn0zm5i2i3.execute-api.us-west-2.amazonaws.com/v1/images')).json();
 		const initData = `
 			__IMAGES__ = ${JSON.stringify(images)};
 			document.getElementById('init-data').remove();
 		`;
 
+		// render React DOM to HTML string
 		const html = dehydrate(
 			<html>
 				<head>
@@ -42,6 +46,7 @@ export async function handler({ pathParameters: { route } }) {
 			</html>
 		);
 
+		// compress with brotli and encode in base64 for API Gateway
 		const encoded = (await compress(html,
 			{ params: {
 				[zlib.constants.BROTLI_PARAM_MODE]: zlib.constants.BROTLI_MODE_TEXT,
@@ -49,6 +54,7 @@ export async function handler({ pathParameters: { route } }) {
 			} }
 		)).toString('base64');
 
+		// return encoded body with appropriate headers and base64 flag for API Gateway
 		return {
 			statusCode: 200,
 			headers: { 'Content-Type': 'text/html', 'Content-Encoding': 'br' },
@@ -56,6 +62,7 @@ export async function handler({ pathParameters: { route } }) {
 			isBase64Encoded: true
 		};
 	} catch (error) {
+		// return 500 with stack trace
 		return {
 			statusCode: 500,
 			headers: { 'Content-Type': 'text/plain; charset=utf-8' },

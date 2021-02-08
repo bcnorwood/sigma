@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
+# store application code in archive
 zip dist/sigma-api     \
 	--recurse-paths    \
 	lambda_function.py \
 	response.py        \
 	routes
 
-aws lambda update-function-code --function-name sigma-api --zip-file fileb://dist/sigma-api.zip
+# upload archive to AWS
+aws lambda update-function-code \
+	--function-name sigma-api   \
+	--zip-file fileb://dist/sigma-api.zip
